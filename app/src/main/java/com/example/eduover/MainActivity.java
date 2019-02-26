@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,9 +27,9 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     private TextInputEditText auc;
     private LinearLayout lin;
     private ProgressBar bar;
-    private Button bute;
     private FloatingActionButton fab;
     private BottomAppBar bab;
+    private String search_;
 
 
 
@@ -130,7 +131,16 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     }
     public void opa(View view) {
-        sid.loadUrl((auc.getText()).toString());
+        search_ = auc.getText().toString();
+        if (search_.substring(0,5).equals("https")){
+            sid.loadUrl((auc.getText()).toString());
+        }
+        else if(search_.substring(0,4).equals("http")) {
+            sid.loadUrl((auc.getText()).toString());
+        }
+        else {
+            sid.loadUrl("https://www.google.com/search?q=" + search_);
+        }
         lin = findViewById(R.id.lin);
         lin.setVisibility(View.INVISIBLE);
     }
