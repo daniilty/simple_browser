@@ -13,38 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" >
+        tools:layout_editor_absoluteY="0dp">
 
     </WebView>
 
 
-
     <LinearLayout
-        android:id = "@+id/lin"
+        android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        android:visibility="gone">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_margin="3dp"
-            android:layout_height="wrap_content"
-            android:hint="Search here"
-            android:textColorHint="#424242"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:hint="Search here"
+            android:textColorHint="#424242">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/texa"
-                android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:fontFamily="@font/rubik_regular"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +56,6 @@
             android:layout_marginRight="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="5"
-            android:background="@drawable/searchh"
             android:elevation="10dp"
             android:fontFamily="@font/rubik_bold"
             android:onClick="opa"
@@ -72,8 +70,6 @@
     </LinearLayout>
 
 
-
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,15 +77,13 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bab"
-            app:hideOnScroll="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorPrimary"
             app:fabAlignmentMode="end"
-
             app:fabCradleRoundedCornerRadius="20dp"
-
-            app:backgroundTint="@color/colorPrimary">
+            app:hideOnScroll="true">
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -97,11 +91,11 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setvis"
             app:backgroundTint="@color/colorAccent"
             app:elevation="10dp"
-            android:onClick="setvis"
             app:layout_anchor="@id/bab"
-            app:srcCompat = "@drawable/round_zoom_in_white_48dp">
+            app:srcCompat="@drawable/round_zoom_in_white_48dp">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
@@ -111,12 +105,12 @@
     <ProgressBar
         android:id="@+id/progressBar3"
         style="?android:attr/progressBarStyle"
-
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="invisible"/>
+        android:layout_gravity="bottom"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

@@ -8,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
@@ -25,11 +27,15 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     private WebView sid;
     private static final String[] arr = {"https://"};
     private TextInputEditText auc;
-    private LinearLayout lin;
+    private View lin;
     private ProgressBar bar;
     private FloatingActionButton fab;
     private BottomAppBar bab;
     private String search_;
+    private int dura;
+    private boolean show = true;
+    private Animation anim2;
+    private Animation anim3;
 
 
 
@@ -40,6 +46,15 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         setContentView(R.layout.activity_main);
         sid = findViewById(R.id.webview);
         bar = findViewById(R.id.progressBar3);
+        Animation anim = AnimationUtils.loadAnimation(this,R.anim.lin);
+        lin = findViewById(R.id.lin);
+        lin.startAnimation(anim);
+        lin.setVisibility(View.VISIBLE);
+        Animation anim1 = AnimationUtils.loadAnimation(this,R.anim.load1);
+        bar.startAnimation(anim1);
+        bar.setVisibility(View.VISIBLE);
+        anim2 = AnimationUtils.loadAnimation(this,R.anim.load2);
+        anim3 = AnimationUtils.loadAnimation(this,R.anim.load3);
         sid.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -49,17 +64,17 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                bar.setVisibility(View.VISIBLE);
+                bar.startAnimation(anim2);
 
             }
 
             public void onPageFinished(WebView view, String url) {
-                bar.setVisibility(View.GONE);
+                bar.startAnimation(anim3);
 
             }
 
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                bar.setVisibility(View.GONE);
+                bar.startAnimation(anim3);
 
             }
         });
@@ -69,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         sid.loadUrl("https://google.com");
         fab  = findViewById(R.id.fab);
         bab = findViewById(R.id.bab);
+
         setSupportActionBar(bab);
 
 
@@ -92,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         return true;
     }
 
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -100,8 +116,20 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     }
 
     public void setvis(View view) {
-        lin = findViewById(R.id.lin);
-        lin.setVisibility(View.VISIBLE);
+        dura = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        Animation anim = null;
+        if (show) {
+            anim = AnimationUtils.loadAnimation(this, R.anim.close);
+            lin.startAnimation(anim);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.close));
+            show = false;
+        } else {
+            anim = AnimationUtils.loadAnimation(this, R.anim.open);
+            lin.startAnimation(anim);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.round_zoom_in_white_48dp));
+            show = true;
+        }
+
 
     }
 
@@ -131,26 +159,27 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     }
     public void opa(View view) {
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.open);
         search_ = auc.getText().toString();
+        if (search_.isEmpty() || search_ == null){
+
+        }
+        else {
         if (search_.substring(0,5).equals("https")){
             sid.loadUrl((auc.getText()).toString());
+
         }
         else if(search_.substring(0,4).equals("http")) {
             sid.loadUrl((auc.getText()).toString());
+
         }
         else {
             sid.loadUrl("https://www.google.com/search?q=" + search_);
-        }
-        lin = findViewById(R.id.lin);
-        lin.setVisibility(View.INVISIBLE);
-    }
-    public void refreshdemo(View view) {
-        sid.reload();
 
+        } }
+        lin.startAnimation(anim);
+        show = true;
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.round_zoom_in_white_48dp));
     }
-    public void forw(View view) {
-        if(sid.canGoForward()) {
-            sid.goForward();
-        }
-    }
+
 }
